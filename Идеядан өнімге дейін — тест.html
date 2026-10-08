@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Идеядан өнімге дейін — тест</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--tx:#1b1f2a;--mu:#667085;--ac:#4f46e5;--ok:#16a34a;--bad:#dc2626;--bd:#e4e7ee;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12141b;--card:#1c1f2a;--tx:#eef0f6;--mu:#9aa3b5;--ac:#818cf8;--bd:#2c3140}}
+:root[data-theme="dark"]{--bg:#12141b;--card:#1c1f2a;--tx:#eef0f6;--mu:#9aa3b5;--ac:#818cf8;--bd:#2c3140}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.45}
+.w{max-width:600px;margin:0 auto;padding:20px 16px 40px}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:20px}
+h1{font-size:22px;margin:0 0 6px}
+p{color:var(--mu);margin:0 0 16px}
+input{width:100%;padding:13px;border:1px solid var(--bd);border-radius:12px;font-size:16px;background:var(--bg);color:var(--tx);margin-bottom:14px}
+button{width:100%;padding:14px;border:0;border-radius:12px;background:var(--ac);color:#fff;font-size:16px;font-weight:600;cursor:pointer}
+button:disabled{opacity:.4}
+.o{display:block;width:100%;text-align:left;background:var(--bg);color:var(--tx);border:1.5px solid var(--bd);font-weight:500;margin-bottom:10px}
+.o.ok{border-color:var(--ok);background:rgba(22,163,74,.15)}
+.o.bad{border-color:var(--bad);background:rgba(220,38,38,.15)}
+.bar{height:6px;background:var(--bd);border-radius:6px;margin-bottom:16px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--ac);width:0;transition:width .3s}
+.q{font-size:18px;font-weight:600;margin:0 0 16px}
+.m{color:var(--mu);font-size:13px;margin-bottom:8px}
+.big{font-size:44px;font-weight:700;color:var(--ac);margin:8px 0}
+.h{display:none}
+</style>
+</head>
+<body>
+<div class="w">
+ <div id="s1" class="c">
+  <h1>💡 Идеядан өнімге дейін</h1>
+  <p>10 сұрақтан тұратын тест. Әр сұраққа бір дұрыс жауап бар.</p>
+  <input id="nm" placeholder="Аты-жөніңіз" autocomplete="name">
+  <button id="go">Бастау</button>
+ </div>
+ <div id="s2" class="c h">
+  <div class="m" id="cnt"></div>
+  <div class="bar"><i id="pr"></i></div>
+  <div class="q" id="qt"></div>
+  <div id="op"></div>
+  <button id="nx" disabled>Келесі</button>
+ </div>
+ <div id="s3" class="c h" style="text-align:center">
+  <h1 id="who"></h1>
+  <div class="big" id="sc"></div>
+  <p id="gr"></p>
+  <button id="rt">Қайта тапсыру</button>
+ </div>
+</div>
+<script>
+var Q=[
+["Жобаның ең бірінші кезеңі қандай?",["Өнімді сату","Мәселені анықтау және идея табу","Жарнама жасау","Қаржы есебін жабу"],1],
+["Мақсатты аудитория дегеніміз не?",["Бәсекелестер тобы","Өнімді жасаушылар","Өнімді сатып алуы мүмкін адамдар тобы","Инвесторлар"],2],
+["Прототип дегеніміз не?",["Өнімнің алғашқы жеңіл үлгісі","Дайын өнімнің бағасы","Өнімнің жарнамасы","Компанияның логотипі"],0],
+["MVP қалай аталады?",["Ең үлкен өнім","Ең аз функциясы бар, жұмыс істейтін өнім","Ең қымбат өнім","Ең танымал өнім"],1],
+["Нарықты зерттеу не үшін қажет?",["Логотип салу үшін","Қызметкер табу үшін","Сұраныс пен бәсекелестерді түсіну үшін","Өнімнің атын қою үшін"],2],
+["Пайдаланушылардан пікір алудың мақсаты қандай?",["Өнімді жақсарту","Өнімді жасыру","Бағаны көтеру","Жарнаманы тоқтату"],0],
+["Өзіндік құн дегеніміз не?",["Өнімнің сату бағасы","Өнімді жасауға кеткен шығындар","Табыс мөлшері","Салық сомасы"],1],
+["Идеяны тексерудің ең жақсы тәсілі қайсы?",["Тек өзіңнің ойыңа сену","Ешкімге көрсетпеу","Бірден көп ақша жұмсау","Шағын сынақ жасап, адамдардан сұрау"],3],
+["Тестілеуден кейін қандай қадам жасалады?",["Жобаны тастау","Қателерді түзетіп, өнімді жетілдіру","Барлық пікірді елемеу","Бағаны төмендету"],1],
+["Өнім іске қосылғаннан кейін маркетингтің міндеті қандай?",["Өнімді жою","Өндірісті тоқтату","Өнім туралы адамдарға жеткізіп, сатылымды арттыру","Бәсекелестерге көмектесу"],2]
+];
+var i=0,s=0,done=false,name="";
+function $(x){return document.getElementById(x)}
+function show(n){["s1","s2","s3"].forEach(function(k){$(k).classList.add("h")});$(n).classList.remove("h");window.scrollTo(0,0)}
+function render(){
+ done=false;var q=Q[i];
+ $("cnt").textContent="Сұрақ "+(i+1)+" / "+Q.length;
+ $("pr").style.width=(i/Q.length*100)+"%";
+ $("qt").textContent=q[0];
+ $("nx").disabled=true;
+ $("nx").textContent=i==Q.length-1?"Аяқтау":"Келесі";
+ var box=$("op");box.innerHTML="";
+ q[1].forEach(function(t,k){
+  var b=document.createElement("button");b.className="o";b.textContent=t;
+  b.onclick=function(){
+   if(done)return;done=true;
+   var all=box.children;
+   for(var j=0;j<all.length;j++){if(j==q[2])all[j].classList.add("ok")}
+   if(k==q[2])s++;else b.classList.add("bad");
+   $("nx").disabled=false;
+  };
+  box.appendChild(b);
+ });
+}
+$("go").onclick=function(){
+ name=$("nm").value.trim();
+ if(!name){$("nm").focus();return}
+ i=0;s=0;show("s2");render();
+};
+$("nx").onclick=function(){
+ i++;
+ if(i>=Q.length){
+  $("who").textContent=name;
+  $("sc").textContent=s+" / "+Q.length;
+  var p=s/Q.length;
+  $("gr").textContent=p>=0.9?"Тамаша! 🏆":p>=0.7?"Жақсы нәтиже! 👍":p>=0.5?"Орташа. Тақырыпты қайталап шық.":"Тақырыпты қайта оқып шық.";
+  show("s3");
+ } else render();
+};
+$("rt").onclick=function(){i=0;s=0;show("s2");render()};
+</script>
+</body>
+</html>
